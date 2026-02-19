@@ -116,7 +116,7 @@ For local development, leave `VITE_API_BASE_URL` empty — Vite proxies `/api` a
 ```bash
 cd frontend
 npm install
-npm run dev
+npm start
 # App opens at http://localhost:5173
 ```
 
