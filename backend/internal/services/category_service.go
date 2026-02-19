@@ -3,6 +3,7 @@ package services
 import (
 	"context"
 	"fmt"
+	"sort"
 	"time"
 
 	"expensify/internal/db"
@@ -52,7 +53,17 @@ func (s *categoryService) GetCategories(ctx context.Context, userID string) ([]*
 		return nil, fmt.Errorf("fetching user categories: %w", err)
 	}
 
-	return append(defaults, custom...), nil
+	all := append(defaults, custom...)
+	sort.Slice(all, func(i, j int) bool {
+		if all[i].Name == "Other" {
+			return false
+		}
+		if all[j].Name == "Other" {
+			return true
+		}
+		return all[i].Name < all[j].Name
+	})
+	return all, nil
 }
 
 func (s *categoryService) CreateCategory(ctx context.Context, userID string, req CreateCategoryRequest) (*models.Category, error) {
