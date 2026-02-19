@@ -18,21 +18,30 @@ var defaultCategories = []models.Category{
 	{Name: "Education", Icon: "📚", Color: "#A29BFE", IsDefault: true},
 	{Name: "Travel", Icon: "✈️", Color: "#FD79A8", IsDefault: true},
 	{Name: "Gifts & Donations", Icon: "🎁", Color: "#55EFC4", IsDefault: true},
+	{Name: "Interest", Icon: "🏦", Color: "#74B9FF", IsDefault: true},
+	{Name: "Dividends", Icon: "📈", Color: "#00B894", IsDefault: true},
+	{Name: "Investment Sales", Icon: "💹", Color: "#6C5CE7", IsDefault: true},
 	{Name: "Other", Icon: "📦", Color: "#B2BEC3", IsDefault: true},
 }
 
-// SeedDefaultCategories inserts the built-in categories if none exist yet.
+// SeedDefaultCategories inserts any built-in categories not yet in the database,
+// so adding new entries to defaultCategories is safe on existing deployments.
 func SeedDefaultCategories(ctx context.Context, repo CategoryRepository) error {
 	existing, err := repo.FindDefaultCategories(ctx)
 	if err != nil {
 		return err
 	}
-	if len(existing) > 0 {
-		return nil
+
+	present := make(map[string]bool, len(existing))
+	for _, c := range existing {
+		present[c.Name] = true
 	}
 
 	for i := range defaultCategories {
-		cat := defaultCategories[i] // copy to avoid mutating the package-level slice
+		cat := defaultCategories[i]
+		if present[cat.Name] {
+			continue
+		}
 		if _, err := repo.Create(ctx, &cat); err != nil {
 			return err
 		}
