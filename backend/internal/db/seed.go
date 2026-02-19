@@ -18,6 +18,7 @@ var defaultCategories = []models.Category{
 	{Name: "Education", Icon: "📚", Color: "#A29BFE", IsDefault: true},
 	{Name: "Travel", Icon: "✈️", Color: "#FD79A8", IsDefault: true},
 	{Name: "Gifts & Donations", Icon: "🎁", Color: "#55EFC4", IsDefault: true},
+	{Name: "Pets", Icon: "🐾", Color: "#FDCB6E", IsDefault: true},
 	{Name: "Interest", Icon: "🏦", Color: "#74B9FF", IsDefault: true},
 	{Name: "Dividends", Icon: "📈", Color: "#00B894", IsDefault: true},
 	{Name: "Investment Sales", Icon: "💹", Color: "#6C5CE7", IsDefault: true},
