@@ -9,11 +9,11 @@ export default defineConfig({
     proxy: {
       // Proxy /auth and /api to the Go backend so cookies work on the same origin.
       "/auth": {
-        target: "http://localhost:8080",
+        target: "https://expensify-backend.adsrivatsa.com",
         changeOrigin: true,
       },
       "/api": {
-        target: "http://localhost:8080",
+        target: "https://expensify-backend.adsrivatsa.com",
         changeOrigin: true,
       },
     },
