@@ -11,7 +11,11 @@ export async function logout(): Promise<void> {
   await client.post('/auth/logout');
 }
 
-/** Navigates to the Google OAuth flow (server-side redirect). */
+/** Navigates to the Google OAuth flow (server-side redirect).
+ *  Must go directly to the backend origin so the oauth_state cookie is set
+ *  on the same domain as the callback, bypassing the Vite proxy.
+ */
 export function loginWithGoogle(): void {
-  window.location.href = '/auth/google';
+  const base = import.meta.env.VITE_API_BASE_URL || '';
+  window.location.href = `${base}/auth/google`;
 }
